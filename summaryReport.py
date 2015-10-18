@@ -6,14 +6,14 @@ import numpy as np
 Fls=glob.glob(sys.argv[1]+"/*.report")
 
 def getPvalue(line):
-	startcol=4  #0-based
+	startcol=5  #0-based
 	comps=line.strip().split()
 	nscore=(len(comps)-startcol)/2
 	scorelist=list()
 	for i in range(nscore):
 		p=float(comps[i*2+startcol]) ##need to change 3 to 4 later
 		scorelist.append(p)
-	return float(sorted(scorelist)[1])
+	return float(sorted(scorelist)[nscore-1])
 
 def getPopulation(bname):
 	return bname.split(".")[1]
@@ -27,7 +27,7 @@ for fl in Fls:
 	lines=open(fl).readlines()
 	for line in lines[1:]:
 		p=getPvalue(line)
-		if p<0.01:
+		if p<0.1:
 		#	print p,bname,line
 			t=getTerm(line)
 			if t not in term_pops:

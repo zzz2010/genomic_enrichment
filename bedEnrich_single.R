@@ -5,9 +5,9 @@ require(GenomicRanges)
 library(doMC)
 registerDoMC(cores=10)
 
-
-PermutationTest_confoundTable<-function(query.gr,annot.gr,confoundTable=NULL){
-topN=min(length(query.gr)*0.05,10000)
+###assuming query.gr are sorted by the scores defining positive set
+PermutationTest_confoundTable<-function(query.gr,annot.gr,confoundTable=NULL,positiveRate=0.05){
+topN=min(length(query.gr)*positiveRate,10000)
 o=order(-query.gr$V4)
 topIndex=o[1:topN]
 
