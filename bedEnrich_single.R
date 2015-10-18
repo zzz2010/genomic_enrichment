@@ -1,3 +1,5 @@
+#Author: Zhizhuo Zhang <zhizhuo@mit.edu>
+
 library(foreach)
 require(ChIPseeker)
 require(GenomicRanges)
@@ -5,9 +7,14 @@ require(GenomicRanges)
 library(doMC)
 registerDoMC(cores=10)
 
-###assuming query.gr are sorted by the scores defining positive set
-PermutationTest_confoundTable<-function(query.gr,annot.gr,confoundTable=NULL,positiveRate=0.05){
-topN=min(length(query.gr)*positiveRate,10000)
+###assuming query.gr with column V4 to be  the scores defining positive set
+PermutationTest_confoundTable<-function(query.gr,annot.gr,confoundTable=NULL,positiveRate=0.05,nperm=1000){
+#topN=min(length(query.gr)*positiveRate,10000)
+if(positiveRate<0.5){
+topN=length(query.gr)*positiveRate
+}else{
+	stop("positiveRate cant be larger than 0.5, pls add more negative samples")
+}
 o=order(-query.gr$V4)
 topIndex=o[1:topN]
 
@@ -27,7 +34,6 @@ lookupTable=aggregate(1:length(confoundMat.quantile),by=list(confoundMat.quantil
 
 topKey.count=table(confoundMat.quantile[topIndex])
 
-nperm=1000
 permCountV= rep(0,nperm);
 for(ii in 1:length(topKey.count)){
 	key=names(topKey.count)[ii]

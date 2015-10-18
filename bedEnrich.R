@@ -1,3 +1,5 @@
+#Author: Zhizhuo Zhang <zhizhuo@mit.edu>
+
 require(ChIPseeker)
 require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 source("~/compbio/projects/yuping/bin/bedEnrich_single.R")
