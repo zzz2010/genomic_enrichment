@@ -1,5 +1,3 @@
-#Author: Zhizhuo Zhang <zhizhuo@mit.edu>
-
 require(ChIPseeker)
 require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 source("~/compbio/projects/yuping/bin/bedEnrich_single.R")
@@ -28,7 +26,7 @@ if(length(Args)>3){
 ChIPseeker_Enrich<-function(querybed,annotationBedFiles){
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 tmpdir="~/htpmp/yp/tmp/"
-system(sprintf("mkdirhier %s",tmpdir))
+system(sprintf("mkdir -p %s",tmpdir))
 topPeakbed=sprintf("%s/top.%s",tmpdir,basename(querybed))
 query.gr=readPeakFile(querybed)
 
